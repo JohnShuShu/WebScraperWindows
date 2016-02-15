@@ -93,8 +93,8 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //                "2Cn%3A%219433446011%2Cn%3A%212350150011%2Cn%3A2478844011%2Cp_36%3A1-99999999&page=" + pageNumber + "&bbn=" +
 //                "2478844011&keywords=games&ie=UTF8&qid=1455292419");
 //        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455231375");
-        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%" +
-                "2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455227365");
+        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2" +
+                "Cp_n_date%3A2479571011&page=" + pageNumber + "&bbn=11350978011&ie=UTF8&qid=1455561017");
 
         chromeDriver.manage().deleteAllCookies();
 
@@ -243,20 +243,31 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 
                     // Extract App Category  ****************************  Games or not
                     List<WebElement> appCatData = appDriver.findElements(By.xpath("//li[contains(@class, 'zg_hrsr_item')]"));
-
+                    String appCategory = "";
                     if(appCatData.size()>0){
-                        String appCatInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appCatData.get(0));
-                        appCatInfo = appCatInfo.replace("\n","").trim();
-//                        System.out.println(appCatInfo);
-                        //Extract content ratings
-                        Pattern appCatPattern = Pattern.compile(">&nbsp;(.+?)<");
-                        matcher = appCatPattern.matcher(appCatInfo);
-                        matcher.find();
-                        String appCategory = matcher.group(1).trim().replace(",","") ;
-                        System.out.print(appCategory + ", ");
-                        app.setAppCategory(appCategory);
-                    }
+                        Integer appCatIndex = appCatData.size();
 
+                        do{
+                            String appCatInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appCatData.get(appCatIndex-1));
+                            appCatInfo = appCatInfo.replace("\n","").trim();
+//                            System.out.println(appCatInfo);
+                            //Extract content ratings
+                            try{
+                                Pattern appCatPattern = Pattern.compile(">&nbsp;(.+?)<");
+                                matcher = appCatPattern.matcher(appCatInfo);
+                                matcher.find();
+                                if(matcher.group(1).trim().length()>1){
+                                    appCategory = matcher.group(1).trim().replace(",","") ;
+                                }
+                            }catch (Exception e){
+                                System.err.println("Caught Exception: App Category " + e.getMessage());
+                            }
+
+                            appCatIndex--;
+                        }while(appCatIndex>0);
+                    }
+                    System.out.print(appCategory + ", ");
+                    app.setAppCategory(appCategory);
 
                     // Extract Amazon Best Seller Rank
                     appData = appDriver.findElements(By.xpath("//li[contains(@id, 'SalesRank')]"));
