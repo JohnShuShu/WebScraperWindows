@@ -1,7 +1,6 @@
 package apps;
 
 import org.medhelp.User;
-//import sun.rmi.rmic.iiop.ValueType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +30,10 @@ public class App {
     public String amazonBestSellerRank;
     public String androidAppstoreRank;
     public String androidAppstoreCategoryRank;
+    public String appCategory;
     public String appSize;
     public boolean editorChoice;
+    public boolean appPaid;
     public boolean topDeveloper;
 
     public App(){
@@ -159,6 +160,14 @@ public class App {
         this.appPrice = appPrice;
     }
 
+    public void setAppDollarPrice(String appDollarPrice) {
+        this.appDollarPrice = appDollarPrice;
+    }
+
+    public String getappDollarPrice() {
+        return appDollarPrice;
+    }
+
     public String getAmazonBestSellerRank() {
         return amazonBestSellerRank;
     }
@@ -191,12 +200,26 @@ public class App {
         this.appSize = appSize;
     }
 
+    public String getAppCategory() {
+        return appCategory;
+    }
+
+    public void setAppCategory(String appCategory) {
+        this.appCategory = appCategory;
+    }
+
     public boolean isEditorChoice() {
         return editorChoice;
     }
 
     public void setEditorChoice(boolean editorChoice) {
         this.editorChoice = editorChoice;
+    }
+
+    public boolean isAppPaid() {return appPaid;}
+
+    public void setAppPaid(boolean appPaid) {
+        this.appPaid = appPaid;
     }
 
     public boolean isTopDeveloper() {
@@ -206,15 +229,6 @@ public class App {
     public void setTopDeveloper(boolean topDeveloper) {
         this.topDeveloper = topDeveloper;
     }
-
-    public void setAppDollarPrice(String appDollarPrice) {
-        this.appDollarPrice = appDollarPrice;
-    }
-
-    public String getappDollarPrice() {
-        return appDollarPrice;
-    }
-
 
     @Override
     public String toString() {
@@ -263,21 +277,22 @@ public class App {
         String fileText = "";
 
         fileText = fileText +
-                  appName.replace(",","") + ", " +
-                  appCreator.replace(",","") + ", " +
-                  numberOfRatings.replace(",","") + ", " +
-                  starRatings + ", " +
-                  printHashMap() + ", " +
-                  releaseDate + ", " +
-                  contentRating + ", " +
-                  inAppProducts + ", " +
-//                  appPrice.replace(",",".") + ", " +
-                  appDollarPrice.replace(",",".") + ", " +
-                  amazonBestSellerRank + ", " +
-                  androidAppstoreRank + ", " +
-                  androidAppstoreCategoryRank + ", " +
-                  appSize + ", " +
-                  appPageLink + ", " + "\n";
+                appName.replace(",","") + ", " +
+                appCreator.replace(",","") + ", " +
+                numberOfRatings.replace(",","") + ", " +
+                starRatings + ", " +
+                printHashMap() + ", " +
+                releaseDate + ", " +
+                appPaid + ", " +
+                inAppProducts + ", " +
+                appPrice + ", " +
+                appDollarPrice + ", " +
+                amazonBestSellerRank + ", " +
+                androidAppstoreRank + ", " +
+                androidAppstoreCategoryRank + ", " +
+                appCategory + ", " +
+                appSize + ", " +
+                appPageLink + ", " +"\n";
 
         return fileText;
     }
@@ -298,61 +313,6 @@ public class App {
 //        return fileText;
 //
 //    }
-
-//    public String printCommentors(){
-//        String commentorsList = "";
-//
-//        try{
-//            if (commentors == null){
-//                commentorsList= "";
-//            } else {
-//                for(User commentor: commentors){
-//                    commentorsList = commentorsList + ", "+  commentor.userName;
-//                }
-//                return commentorsList;
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Caught Exception: " + e.getMessage());
-//        }
-//
-//        return commentorsList;
-//    }
-//
-
-    //    @Override
-//    public String toString() {
-//        return "Thread{" +
-//                "appName='" + appName + '\'' +
-//                ", appLink='" + appLink + '\'' +
-//                ", dateCreated=" + dateCreated +
-//                ", appCreator='" + appCreator + '\'' +
-//                ", threadNumber=" + threadNumber +
-//                ", threadPageNumber=" + threadPageNumber +
-//                ", commentsNumber=" + commentsNumber +
-//                ", threadCreatorLink='" + threadCreatorLink + '\'' +
-//                ", threadCommentor='" + commentors + '\'' +
-//                '}';
-//    }
-//
-//    public String printToFileQuotes() {
-//        String fileText = "";
-//
-//        fileText = fileText + "\"" + appName + "\"" + ", " +
-//                "\"" + appLink + "\"" + ", " +
-//                "\"" + dateCreated+ "\"" + ", " +
-//                "\"" + appCreator + "\"" + ", " +
-//                "\"" + threadCreatorLink+ "\"" + ", " +
-//                "\"" + threadNumber+ "\"" + ", " +
-//                "\"" + threadPageNumber+ "\"" + ", " +
-//                "\"" + printCommentors()+ "\"" + ", " +
-//                "\"" + commentsNumber+ "\"" + ", " + "\n\n";
-//
-//        return fileText;
-//
-//    }
-//
-//
-
 
 
 }

@@ -89,10 +89,13 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //                "11350978011&search-alias=banjo-apps&field-review-rating=2479575011&bbn=11350978011&pf_rd_m=" +
 //                "ATVPDKIKX0DER&pf_rd_s=merchandised-search-1&pf_rd_r=12QMT9KHXA5TXCGMYM4R&pf_rd_t=101&pf_rd_p=2382153642&pf_rd_i=2350149011");
 
-        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=k%3Agames%2Cn%3A2350149011%2Cn%3A%212445993011%" +
-                "2Cn%3A%219433446011%2Cn%3A%212350150011%2Cn%3A2478844011%2Cp_36%3A1-99999999&page=" + pageNumber + "&bbn=" +
-                "2478844011&keywords=games&ie=UTF8&qid=1455292419");
+//        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=k%3Agames%2Cn%3A2350149011%2Cn%3A%212445993011%" +
+//                "2Cn%3A%219433446011%2Cn%3A%212350150011%2Cn%3A2478844011%2Cp_36%3A1-99999999&page=" + pageNumber + "&bbn=" +
+//                "2478844011&keywords=games&ie=UTF8&qid=1455292419");
 //        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455231375");
+        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%" +
+                "2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455227365");
+
         chromeDriver.manage().deleteAllCookies();
 
         List<WebElement> appList = chromeDriver.findElements(By.className("s-result-item"));
@@ -112,17 +115,6 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //            for ( int i=0; i < 6; i++){
                 System.out.println("######### j = " + j + " ######### appList.size() = " + appList.size());
                 j++;
-//                if(i+2 > appList.size() | (appNumber/appList.size())==pageNumber | appCountDown<1){
-////                if(appCountDown<1){
-////                if(appNumber>4){
-//
-//                    System.out.println("************************************************************************* NAVIGATING TO NEXT PAGE *************************************************************************");
-//                    pageNumber++;
-////                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Cp_72%3A2479575011&page="+pageNumber+"&bbn=11350978011&ie=UTF8&qid=1454029105");
-//                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cp_36%3A1-99999999&page="+pageNumber+"&bbn=2350149011&ie=UTF8&qid=1454565863");
-//
-//                    appList = chromeDriver.findElements(By.className("s-result-item"));
-//                }
 
                 try {
 
@@ -172,6 +164,22 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //                String appInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appData.get(0));
 //                System.out.println(appInfo + "\n");
 
+                    // Extract Underground or Not, Paid or Not
+                    List<WebElement> paidData = appDriver.findElements(By.xpath("//a[contains(@class, 'banjoLogoText')]"));
+                    Boolean appPaid = true;
+                    if(paidData.size()>0){
+                        String appInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", paidData.get(0));
+//                      System.out.println("\n" + appInfo.replace("\n"," ") + "\n");
+
+                        if(appInfo.trim().equals("Amazon Underground")){
+                            appPaid = false;
+                        }
+                    }
+                    System.out.print(appPaid + ", ");
+                    app.setAppPaid(appPaid);
+
+
+
                     // Extract app Creator Name
                     List<WebElement> appData = appDriver.findElements(By.xpath("//div[contains(@class, 'buying')]"));
                     String appInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appData.get(0));
@@ -203,10 +211,8 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
                     app.setAppDollarPrice(appDollarPrice);
 
                     // Extract App price and inAppProducts
-//                appData = appDriver.findElements(By.xpath("//div[contains(@class, 'buying')]"));
                     appInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appData.get(1));
-//                System.out.println("\n" + appInfo.replace("\n"," ") + "\n");
-
+//                  System.out.println("\n" + appInfo.replace("\n"," ") + "\n");
                     Pattern appPricePattern = Pattern.compile("<span class=\"banjoPrice\">(.+?)<\\/span>");
                     matcher = appPricePattern.matcher(appInfo.replace("\n", ""));
                     while (matcher.find()) {
@@ -220,13 +226,12 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
                             app.setInAppProducts(inAppProducts.trim());
                         }
                     }
-                    ;
 
 
                     // Extract Release Date
                     appData = appDriver.findElements(By.xpath("//td[contains(@class, 'bucket')]"));
                     appInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appData.get(0));
-//                System.out.println("\n" + appInfo.replace("\n"," ") + "\n");
+//                 System.out.println("\n" + appInfo.replace("\n"," ") + "\n");
 
                     Pattern releaseDatePattern = Pattern.compile("<li><b> Release Date:<\\/b>(.+?)<\\/li>");
                     matcher = releaseDatePattern.matcher(appInfo);
@@ -236,13 +241,21 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
                     app.setReleaseDate(releaseDate);
 
 
-                    // Extract content ratings
-//                Pattern contentRatingPattern = Pattern.compile("<a id=\"mas-show-product-ratings\" class=\"a-link-normal\" href=\"#\">(.+?)</a>");
-//                matcher = contentRatingPattern.matcher(appInfo);
-//                matcher.find();
-//                String contentRating = matcher.group(1).trim().replace(",","") ;
-//                System.out.print(contentRating + "\n");
-//                app.setReleaseDate(contentRating);
+                    // Extract App Category  ****************************  Games or not
+                    List<WebElement> appCatData = appDriver.findElements(By.xpath("//li[contains(@class, 'zg_hrsr_item')]"));
+
+                    if(appCatData.size()>0){
+                        String appCatInfo = (String) ((JavascriptExecutor) appDriver).executeScript("return arguments[0].innerHTML;", appCatData.get(0));
+                        appCatInfo = appCatInfo.replace("\n","").trim();
+//                        System.out.println(appCatInfo);
+                        //Extract content ratings
+                        Pattern appCatPattern = Pattern.compile(">&nbsp;(.+?)<");
+                        matcher = appCatPattern.matcher(appCatInfo);
+                        matcher.find();
+                        String appCategory = matcher.group(1).trim().replace(",","") ;
+                        System.out.print(appCategory + ", ");
+                        app.setAppCategory(appCategory);
+                    }
 
 
                     // Extract Amazon Best Seller Rank
