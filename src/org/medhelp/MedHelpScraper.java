@@ -81,7 +81,10 @@ public class MedHelpScraper extends Thread {
             // pageNumber is automatically incremented at the end of this loop so next page can be crawled. This happens until pages have
             // no more data i.e. threads.
             chromeDriver.manage().deleteAllCookies();
-            chromeDriver.navigate().to("http://www.medhelp.org/forums/Anxiety/show/71?page=" + pageNumber);
+//            chromeDriver.navigate().to("http://www.medhelp.org/forums/Anxiety/show/71?page=" + pageNumber);
+//            chromeDriver.navigate().to("http://www.medhelp.org/forums/Pregnancy-Ages-18-24-/show/152?page=" + pageNumber);
+//            chromeDriver.navigate().to("http://www.medhelp.org/forums/Womens-Health/show/81?page=" + pageNumber);
+            chromeDriver.navigate().to("http://www.medhelp.org/forums/Pregnancy-Ages-25-34/show/1503?page=" + pageNumber);
             chromeDriver.manage().deleteAllCookies();
 
 //            http://www.medhelp.org/forums/Relationships/show/78?page=390
@@ -103,7 +106,7 @@ public class MedHelpScraper extends Thread {
 
 
             for ( int i=0; i < threadsList.size(); i++){
-//            for ( int i=0; i < 4; i++){
+//            for ( int i=0; i < 2; i++){
 
 
                 // Extract Thread Names
@@ -212,7 +215,7 @@ public class MedHelpScraper extends Thread {
             // The first run in file "Threads1.csv" has data for all of the 29 pages. About 576 Threads
             pageNumber++;
 
-//        } while(pageNumber < 3 );
+//        } while(pageNumber < 2 );
         }while(!(newSubjectElement.isEmpty()) ); // Set the number of Pages you want to crawl here. This Forum has about 29 pages crawlable.
 //        } while(pageNumber < 3 | !(newSubjectElement.isEmpty())  );
 
@@ -233,7 +236,7 @@ public class MedHelpScraper extends Thread {
 //        }
 
 //        userList = createUserListFromFile(dir+"/UsersComplete-3rd-Half.csv");
-
+//
         System.out.println("userList size after thread scrape : " + userList.size());
 
 
@@ -253,7 +256,7 @@ public class MedHelpScraper extends Thread {
 //            System.out.println(user.userName + ",");
 //        }
 
-        System.out.println("userList size after posts scrape : " + userList.size());
+//        System.out.println("userList size after posts scrape : " + userList.size());
 
 
         userList = scrapeFriends(userList);
@@ -263,7 +266,7 @@ public class MedHelpScraper extends Thread {
 //            System.out.println(user.userName + ",");
 //        }
 
-        System.out.println("userList size after friends scrape : " + userList.size());
+//        System.out.println("userList size after friends scrape : " + userList.size());
 
 
         try{

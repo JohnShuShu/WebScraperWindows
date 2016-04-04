@@ -27,7 +27,7 @@ public class AmazonAppScraper {
 //    public static String dir = "/Users/johnshu/Desktop/WebScraper"; // General directory root **** Be sure to CHANGE *****
 public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General directory root **** Be sure to CHANGE *****
 
-    public static String dateString = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + "-Apps";
+    public static String dateString = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + "- With Category - Page1";
 
 
     public static void main(String[] args) throws Exception {
@@ -93,9 +93,8 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //                "2Cn%3A%219433446011%2Cn%3A%212350150011%2Cn%3A2478844011%2Cp_36%3A1-99999999&page=" + pageNumber + "&bbn=" +
 //                "2478844011&keywords=games&ie=UTF8&qid=1455292419");
 //        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455231375");
-        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2" +
-                "Cp_n_date%3A2479571011&page=" + pageNumber + "&bbn=11350978011&ie=UTF8&qid=1455561017");
-
+//        chromeDriver.navigate().to("http://www.amazon.com/s/ref=lp_11350978011_pg_" + pageNumber + "?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011&page=" + pageNumber + "&ie=UTF8&qid=1455737589");
+        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_" + pageNumber + "?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455737966");
         chromeDriver.manage().deleteAllCookies();
 
         List<WebElement> appList = chromeDriver.findElements(By.className("s-result-item"));
@@ -364,10 +363,10 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
 //                if(appCountDown<1){
 //                if(appNumber>4){
                         j = 0;
-                        System.out.println("************************************************************************* NAVIGATING TO NEXT PAGE *************************************************************************");
                         pageNumber++;
+                        System.out.println("************************************************************************* NAVIGATING TO NEXT PAGE " + pageNumber  + " *************************************************************************");
 //                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Cp_72%3A2479575011&page="+pageNumber+"&bbn=11350978011&ie=UTF8&qid=1454029105");
-                        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cp_36%3A1-99999999&page="+pageNumber+"&bbn=2350149011&ie=UTF8&qid=1454565863");
+                        chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_" + pageNumber + "?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455737966");
 
                         appList = chromeDriver.findElements(By.className("s-result-item"));
                     }
@@ -378,10 +377,10 @@ public static String dir = "C:\\Users\\John\\Desktop\\WebScraper"; // General di
                 if(j+1 > appList.size()){
 //                if(appNumber>4){
                     j = 0;
-                    System.out.println("************************************************************************* NAVIGATING TO NEXT PAGE *************************************************************************");
                     pageNumber++;
+                    System.out.println("************************************************************************* NAVIGATING TO NEXT PAGE " + pageNumber  + " *************************************************************************");
 //                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Cp_72%3A2479575011&page="+pageNumber+"&bbn=11350978011&ie=UTF8&qid=1454029105");
-                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_2?rh=n%3A2350149011%2Cp_36%3A1-99999999&page="+pageNumber+"&bbn=2350149011&ie=UTF8&qid=1454565863");
+                    chromeDriver.navigate().to("http://www.amazon.com/s/ref=sr_pg_" + pageNumber + "?rh=n%3A2350149011%2Cn%3A%212445993011%2Cn%3A11350978011%2Ck%3Aapps&page=" + pageNumber + "&keywords=apps&ie=UTF8&qid=1455737966");
 
                     appList = chromeDriver.findElements(By.className("s-result-item"));
                 }
